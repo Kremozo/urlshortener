@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 @Table(name = "urls")
 public class UrlEntity{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
     
     @Column(nullable = false)
@@ -21,7 +21,8 @@ public class UrlEntity{
     public UrlEntity(){
     }
 
-    public UrlEntity(String originalUrl,String shortCode){
+    public UrlEntity(Long id,String originalUrl,String shortCode){
+        this.id=id;
         this.originalUrl = originalUrl;
         this.shortCode=shortCode;
         this.createdAt=LocalDateTime.now();
