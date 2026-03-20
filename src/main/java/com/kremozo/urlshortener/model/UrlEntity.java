@@ -6,9 +6,9 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "urls")
 public class UrlEntity{
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long id;
+    @Id 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     
     @Column(nullable = false)
     private String originalUrl;
@@ -21,8 +21,7 @@ public class UrlEntity{
     public UrlEntity(){
     }
 
-    public UrlEntity(Long id,String originalUrl,String shortCode){
-        this.id=id;
+    public UrlEntity(String originalUrl,String shortCode){
         this.originalUrl = originalUrl;
         this.shortCode=shortCode;
         this.createdAt=LocalDateTime.now();

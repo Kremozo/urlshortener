@@ -29,10 +29,14 @@ public class UrlService {
         return shortCodeBuilder.reverse().toString();
     }
     public String shortenUrl(String originalUrl){
-        Long nextid = urlRepository.getNextSequenceValue();
-        String shortCode = encodeBase62(nextid);
+        // 1. Save with a temporary placeholder to force the database to generate an ID
+        String tempPlaceholder = "TEMP-" + System.nanoTime();
+        UrlEntity urlEntity = new UrlEntity(originalUrl, tempPlaceholder);
+        urlEntity = urlRepository.save(urlEntity); 
 
-        UrlEntity urlEntity = new UrlEntity(nextid,originalUrl,shortCode);
+        String shortCode = encodeBase62(urlEntity.getId());
+
+        urlEntity.setShortCode(shortCode);
         urlRepository.save(urlEntity);
 
         return shortCode;
